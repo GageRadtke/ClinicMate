@@ -1,0 +1,27 @@
+{
+  "name": "clinicmate-backend",
+  "version": "1.0.0",
+  "description": "ClinicMate API (Node. + Express)",
+  "main": "src/index.",
+  "scripts": {
+    "start": "node src/index.",
+    "dev": "nodemon src/index.",
+    "test": "jest --coverage --runInBand"
+  },
+  "keywords": [],
+  "author": "Your Team Name",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "onwebtoken": "^9.0.0",
+    "mongoose": "^6.6.6"
+  },
+  "devDependencies": {
+    "jest": "^29.0.3",
+    "supertest": "^6.3.3",
+    "nodemon": "^2.0.20"
+  }
+}
