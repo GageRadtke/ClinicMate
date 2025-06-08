@@ -2,10 +2,10 @@
   "name": "clinicmate-backend",
   "version": "1.0.0",
   "description": "ClinicMate API (Node. + Express)",
-  "main": "src/index.",
+  "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "nodemon src/index.",
+    "dev": "nodemon src/index.js",
     "test": "jest --coverage --runInBand"
   },
   "keywords": [],
