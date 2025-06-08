@@ -1,0 +1,95 @@
+/* style.css */
+@import "tailwindcss";
+
+/* Base Styles (similar to how you'd define global styles in a regular CSS file) */
+body {
+    font-family: ui-sans-serif, system-ui, sans-serif; /* @apply font-sans */
+    margin: 0; /* @apply m-0 */
+    padding: 0; /* @apply p-0 */
+    background-color: #f9fafb; /* @apply bg-gray-50 */
+    color: #374151; /* @apply text-gray-800 */
+}
+
+/* Component Styles */
+.navbar {
+    @apply bg-gray-800 p-4 flex justify-between items-center shadow-md;
+}
+
+.navbar .logo {
+    @apply text-gray-100 text-2xl font-bold;
+}
+.navbar .nav-links {
+    @apply flex gap-5;
+}
+
+.navbar .nav-links button {
+    @apply bg-blue-500 text-white py-2 px-4 rounded-md cursor-pointer text-base transition duration-300 ease-in-out;
+}
+
+.navbar .nav-links button:hover {
+    @apply bg-blue-600;
+}
+
+.navbar .nav-links a {
+    @apply text-gray-100 no-underline py-2 px-4 rounded-md transition duration-300 ease-in-out;
+}
+
+.navbar .nav-links a:hover {
+    @apply bg-gray-700;
+}
+
+.welcome-section {
+    @apply text-center py-24 px-5 bg-gray-100 border-b border-gray-300;
+}
+
+.welcome-section h1 {
+    @apply text-gray-800 text-5xl mb-5;
+}
+
+.welcome-section p {
+    @apply text-gray-600 text-xl max-w-4xl mx-auto leading-relaxed;
+}
+
+.features-section {
+    @apply py-16 px-5 text-center;
+}
+
+.features-section h2 {
+    @apply text-gray-800 text-4xl mb-10;
+}
+
+.feature-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto;
+}
+
+.feature-item {
+    @apply bg-white p-8 rounded-lg shadow-md text-left;
+}
+
+.feature-item h3 {
+    @apply text-blue-500 mt-0 text-2xl;
+}
+
+.feature-item p {
+    @apply text-base leading-relaxed;
+}
+
+.admin-section {
+    @apply py-16 px-5 text-center pb-24;
+}
+
+.admin-section .admin-item {
+    @apply text-center col-span-full bg-white p-8 rounded-lg shadow-md;
+}
+
+.admin-login-button {
+    @apply bg-orange-500 text-white py-2 px-4 rounded-md cursor-pointer text-base mt-5 transition duration-300 ease-in-out;
+}
+
+.admin-login-button:hover {
+    @apply bg-orange-600;
+}
+
+.footer {
+    @apply bg-gray-800 text-gray-100 text-center py-5 mt-12 text-sm;
+}
