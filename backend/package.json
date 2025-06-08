@@ -4,7 +4,7 @@
   "description": "ClinicMate API (Node. + Express)",
   "main": "src/index.",
   "scripts": {
-    "start": "node src/index.",
+    "start": "node src/index.js",
     "dev": "nodemon src/index.",
     "test": "jest --coverage --runInBand"
   },
