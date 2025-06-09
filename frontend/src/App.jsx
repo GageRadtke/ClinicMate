@@ -18,6 +18,7 @@ function App() {
   return (
     <AuthContextProvider>
       <Router>
+         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
