@@ -6,7 +6,6 @@ import NotificationPopup from "./components/NotificationPopup";
 import DoctorPage from "./pages/DoctorPage";
 import NavBar from "./components/NavBar";
 import WelcomeSection from "./components/WelcomeSection";
-
 import AdminPanel from "./pages/AdminPanel";
 import LoginPage from "./pages/LoginPage";
 
