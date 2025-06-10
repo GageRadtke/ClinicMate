@@ -7,20 +7,26 @@ export default function DoctorPage() {
   const [patients, setPatients] = useState([]);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch appointments
-    apiClient
-      .get("/appointments")
-      .then((response) => setAppointments(response.data))
-      .catch(() => setError("Failed to fetch appointments."));
-
-    // Fetch patients
-    apiClient
-      .get("/patients")
-      .then((response) => setPatients(response.data))
-      .catch(() => setError("Failed to fetch patients."));
+    Promise.all([
+      apiClient.get("/appointments").then((res) => setAppointments(res.data)),
+      apiClient.get("/patients").then((res) => setPatients(res.data)),
+    ])
+      .catch(() => setError("Failed to fetch appointments or patients."))
+      .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (success || error) {
+      const timer = setTimeout(() => {
+        setSuccess("");
+        setError("");
+      }, 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [success, error]);
 
   const handleSendMessage = ({ recipientId, subject, body }) => {
     apiClient
@@ -30,9 +36,7 @@ export default function DoctorPage() {
         body,
         senderRole: "doctor",
       })
-      .then(() => {
-        setSuccess("Message sent successfully!");
-      })
+      .then(() => setSuccess("Message sent successfully!"))
       .catch((err) => {
         setError(
           "Failed to send message: " +
@@ -43,31 +47,40 @@ export default function DoctorPage() {
 
   return (
     <div className="p-6">
-      {" "}
-      {/* Was: < className=... also removed App shell structure */}
       <h1 className="text-2xl font-semibold mb-4">Doctor Dashboard</h1>
+
       {error && <p className="text-red-500">{error}</p>}
       {success && <p className="text-green-500">{success}</p>}
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">Upcoming Appointments</h2>
-        {appointments.length > 0 ? (
-          <ul>
-            {appointments.map((appt) => (
-              <li key={appt.id} className="mb-2 p-2 border rounded">
-                {appt.patient_name} at{" "}
-                {new Date(appt.appointment_time).toLocaleString()} -{" "}
-                {appt.status}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No upcoming appointments.</p>
-        )}
-      </div>
-      <SecureMessageForm
-        patients={patients}
-        onSendMessage={handleSendMessage}
-      />
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">
+              Upcoming Appointments
+            </h2>
+            {appointments.length > 0 ? (
+              <ul>
+                {appointments.map((appt) => (
+                  <li key={appt.id} className="mb-2 p-2 border rounded">
+                    {appt.patient_name} at{" "}
+                    {new Date(appt.appointment_time).toLocaleString()} -{" "}
+                    {appt.status}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No upcoming appointments.</p>
+            )}
+          </div>
+
+          <SecureMessageForm
+            patients={patients}
+            onSendMessage={handleSendMessage}
+          />
+        </>
+      )}
     </div>
   );
 }

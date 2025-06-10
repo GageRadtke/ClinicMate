@@ -1,19 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom"; // Import routing components
+import { Routes, Route, Outlet } from "react-router-dom";
 
-import Header from "./components/Header"; // Ensure this path is correct
-import Dashboard from "./pages/Dashboard"; // Ensure this path is correct, e.g., if Dashboard is a page
-import NotificationPopup from "./components/NotificationPopup"; // Ensure this path is correct
-import DoctorPage from "./pages/DoctorPage"; // Import DoctorPage
-import NavBar from "./components/NavBar"; // Import NavBar
+import Header from "./components/Header";
+import Dashboard from "./pages/Dashboard";
+import NotificationPopup from "./components/NotificationPopup";
+import DoctorPage from "./pages/DoctorPage";
+import NavBar from "./components/NavBar";
+import WelcomeSection from "./components/WelcomeSection";
+import AboutSection from "./components/AboutSection";
+import HelpSection from "./components/HelpSection";
+import ContactSection from "./components/ContactSection";
+import Footer from "./components/Footer";
+import AdminPanel from "./pages/AdminPanel";
+import LoginPage from "./pages/LoginPage";
+
+// Layout for pages with footer
+const LayoutWithFooter = () => (
+  <>
+    <Outlet />
+    <Footer />
+  </>
+);
 
 function App() {
   const [showNotification, setShowNotification] = useState(false);
-  const [nextAppointment, setNextAppointment] = useState(null); // This would come from your API
+  const [nextAppointment, setNextAppointment] = useState(null);
 
   useEffect(() => {
-    // In a real app, you'd fetch the next appointment from your API here
-    // For demonstration, let's mock it
     const mockNextAppointment = {
       id: "appt-123",
       patientName: "Alice Johnson",
@@ -23,37 +36,43 @@ function App() {
     };
     setNextAppointment(mockNextAppointment);
 
-    // Show notification after a delay (or based on real-time event)
     const timer = setTimeout(() => {
       setShowNotification(true);
-    }, 3000); // Show after 3 seconds
+    }, 3000);
 
-    return () => clearTimeout(timer); // Cleanup
+    return () => clearTimeout(timer);
   }, []);
 
   const handleAcknowledge = () => {
     setShowNotification(false);
-    // You might want to update a flag in your database here
-    // to prevent showing the same notification again for this session/user.
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 font-sans">
+    <div className="flex flex-col h-screen bg-gray-100 font-sans">
       <NavBar />
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header />
-        {/* Basic navigation links */}
 
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6">
           <Routes>
-            <Route path="/" element={<Dashboard />} />
+            {/* Public Pages with Footer */}
+            <Route element={<LayoutWithFooter />}>
+              <Route path="/" element={<WelcomeSection />} />
+              <Route path="/about" element={<AboutSection />} />
+              <Route path="/help" element={<HelpSection />} />
+              <Route path="/contact" element={<ContactSection />} />
+            </Route>
+
+            {/* Functional Routes without footer */}
+            <Route path="/patient" element={<Dashboard />} />
             <Route path="/doctor" element={<DoctorPage />} />
-            {/* Add other routes here as needed */}
-            <Route path="*" element={<div>Page Not Found</div>} />{" "}
-            {/* Fallback for unknown paths */}
+            <Route path="/admin" element={<AdminPanel />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<div>Page Not Found</div>} />
           </Routes>
         </main>
       </div>
+
       {showNotification && nextAppointment && (
         <NotificationPopup
           appointment={nextAppointment}
