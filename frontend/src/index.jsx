@@ -1,13 +1,18 @@
+// src/index.jsx
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./tailwind.css";
+import { BrowserRouter } from "react-router-dom";
+import AuthContextProvider from "./context/AuthContext";
 import App from "./App";
+import "./tailwind.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-<React.StrictMode>
+  <React.StrictMode>
     <BrowserRouter>
-    <App />
+      <AuthContextProvider>
+        <App />
+      </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

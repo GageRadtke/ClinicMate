@@ -36,7 +36,7 @@ app.use(
 
 // 4. JSON body parsing (fixed)
 app.use(cors());
-app.use(express.on());
+app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);

@@ -4,57 +4,83 @@ import SecureMessageForm from "../components/SecureMessageForm";
 
 export default function DoctorPage() {
   const [appointments, setAppointments] = useState([]);
+  const [patients, setPatients] = useState([]);
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchAppointments();
+    Promise.all([
+      apiClient.get("/appointments").then((res) => setAppointments(res.data)),
+      apiClient.get("/patients").then((res) => setPatients(res.data)),
+    ])
+      .catch(() => setError("Failed to fetch appointments or patients."))
+      .finally(() => setLoading(false));
   }, []);
 
-  const fetchAppointments = async () => {
-    try {
-      const res = await apiClient.get("/appointments");
-      setAppointments(res.data);
-    } catch (err) {
-      console.error(err);
+  useEffect(() => {
+    if (success || error) {
+      const timer = setTimeout(() => {
+        setSuccess("");
+        setError("");
+      }, 4000);
+      return () => clearTimeout(timer);
     }
-  };
+  }, [success, error]);
 
-  const updateStatus = async (id, status) => {
-    try {
-      await apiClient.patch(`/appointments/${id}`, { appointment_status: status });
-      fetchAppointments();
-    } catch (err) {
-      console.error(err);
-    }
+  const handleSendMessage = ({ recipientId, subject, body }) => {
+    apiClient
+      .post("/messages/send", {
+        recipientId,
+        subject,
+        body,
+        senderRole: "doctor",
+      })
+      .then(() => setSuccess("Message sent successfully!"))
+      .catch((err) => {
+        setError(
+          "Failed to send message: " +
+            (err.response?.data?.message || err.message)
+        );
+      });
   };
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl mb-4">Doctor Dashboard</h2>
-      <h3 className="text-xl mb-2">Your Appointments</h3>
-      <ul>
-        {appointments.map((appt) => (
-          <li key={appt.appointment_id} className="border p-2 mb-2 rounded">
-            {appt.patient_id.first_name} {appt.patient_id.last_name} –{" "}
-            {new Date(appt.dateTime).toLocaleString()} – Status: {appt.appointment_status}
-            <div className="mt-2">
-              <button
-                onClick={() => updateStatus(appt.appointment_id, "completed")}
-                className="mr-2 bg-green-600 text-white px-2 py-1 rounded"
-              >
-                Mark Completed
-              </button>
-              <button
-                onClick={() => updateStatus(appt.appointment_id, "canceled")}
-                className="bg-red-600 text-white px-2 py-1 rounded"
-              >
-                Cancel
-              </button>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <h3 className="text-xl mt-6 mb-2">Secure Messages</h3>
-      <SecureMessageForm />
+      <h1 className="text-2xl font-semibold mb-4">Doctor Dashboard</h1>
+
+      {error && <p className="text-red-500">{error}</p>}
+      {success && <p className="text-green-500">{success}</p>}
+
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">
+              Upcoming Appointments
+            </h2>
+            {appointments.length > 0 ? (
+              <ul>
+                {appointments.map((appt) => (
+                  <li key={appt.id} className="mb-2 p-2 border rounded">
+                    {appt.patient_name} at{" "}
+                    {new Date(appt.appointment_time).toLocaleString()} -{" "}
+                    {appt.status}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p>No upcoming appointments.</p>
+            )}
+          </div>
+
+          <SecureMessageForm
+            patients={patients}
+            onSendMessage={handleSendMessage}
+          />
+        </>
+      )}
     </div>
   );
 }
