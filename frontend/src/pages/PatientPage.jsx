@@ -1,3 +1,4 @@
+// PatientPage.jsx
 import React, { useEffect, useState } from "react";
 import apiClient from "../services/api";
 import AppointmentForm from "../components/AppointmentForm";
@@ -39,7 +40,8 @@ export default function PatientPage() {
       <ul className="mb-6">
         {appointments.map((appt) => (
           <li key={appt.appointment_id} className="border p-2 mb-2 rounded">
-            {new Date(appt.dateTime).toLocaleString()} – Status: {appt.appointment_status}
+            {new Date(appt.dateTime).toLocaleString()} – Status:{" "}
+            {appt.appointment_status}
           </li>
         ))}
       </ul>
