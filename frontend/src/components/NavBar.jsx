@@ -55,14 +55,17 @@ function NavBar() {
             </li>
           </>
         ) : (
-          (<li>
-            <Link
-              to="/login"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
-            >
-              Login
-            </Link>
-          </li>)(
+          <>
+            {" "}
+            {/* <-- ADDED React.Fragment shorthand here */}
+            <li>
+              <Link
+                to="/login"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+              >
+                Login
+              </Link>
+            </li>
             <li>
               <Link
                 to="/Register"
@@ -71,7 +74,7 @@ function NavBar() {
                 Register New User
               </Link>
             </li>
-          )
+          </> // <-- CLOSED React.Fragment shorthand here
         )}
       </ul>
     </nav>

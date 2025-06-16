@@ -1,8 +1,8 @@
 // Dashboard.jsx
 import React, { useState } from "react";
-import RecordViewer from "../components/RecordViewer";
-import NotesSection from "../components/NotesSection";
-import ScheduleManager from "../components/ScheduleManager";
+import RecordViewer from "./RecordViewer";
+import NotesSection from "./NotesSection";
+import ScheduleManager from "./ScheduleManager";
 
 function Dashboard() {
   const [selectedPatientId, setSelectedPatientId] = useState(null);

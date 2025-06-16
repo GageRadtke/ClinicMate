@@ -1,42 +1,47 @@
-import React, { createContext, useState, useEffect, useContext } from "react";
-import jwtDecode from "jwt-decode";
+// AuthContext.jsx
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode"; // Corrected: Named import for jwtDecode
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
-
-export default function AuthContextProvider({ children }) {
+export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
-    // On mount, check if a valid token exists
-    const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decoded = jwtDecode(token);
-        setUser({ _id: decoded.id, role: decoded.role, token });
-      } catch {
+        const decodedUser = jwtDecode(token); // Corrected: Using named import
+        setUser(decodedUser);
+      } catch (error) {
+        console.error("Invalid token:", error);
         localStorage.removeItem("token");
+        setToken(null);
+        setUser(null);
       }
     }
-  }, []);
+  }, [token]);
 
-  const login = (token) => {
-    localStorage.setItem("token", token);
-    const decoded = jwtDecode(token);
-    setUser({ _id: decoded.id, role: decoded.role, token });
+  const login = (newToken) => {
+    localStorage.setItem("token", newToken);
+    setToken(newToken);
+    const decodedUser = jwtDecode(newToken); // Corrected: Using named import
+    setUser(decodedUser);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
+    setToken(null);
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};

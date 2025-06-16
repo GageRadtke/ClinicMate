@@ -1,14 +1,15 @@
 // App.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import PatientPage from "./pages/PatientPage";
 import DoctorPage from "./pages/DoctorPage";
 import NavBar from "./components/NavBar";
 import AdminPanel from "./pages/AdminPanel";
 import LoginPage from "./pages/LoginPage";
-import Dashboard from "./pages/Dashboard";
 import HomePage from "./pages/HomePage";
 import SecureMessageForm from "./components/SecureMessageForm";
-import ContactPage from "./pages/ContactPage";
+import ContactPage from "./pages/ContactPage"; // Corrected: This should be .jsx if renamed
+import RegisterPage from "./pages/RegisterPage";
 
 const App = () => {
   return (
@@ -20,10 +21,11 @@ const App = () => {
             {/* Public Pages */}
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/SecureMessageForm" element={<SecureMessageForm />} />
+            <Route path="/securemessageform" element={<SecureMessageForm />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             {/* Authenticated Pages */}
-            <Route path="/patient" element={<Dashboard />} />
+            <Route path="/patient" element={<PatientPage />} />
             <Route path="/doctor" element={<DoctorPage />} />
             <Route path="/admin" element={<AdminPanel />} />
             {/* Fallback for unknown routes */}

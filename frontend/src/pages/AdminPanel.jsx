@@ -1,6 +1,6 @@
 // AdminPanel.jsx
 import React, { useEffect, useState } from "react";
-import apiClient from "../services/api";
+import apiClient from "../services/api.jsx"; // Corrected: Explicitly import from .jsx
 
 export default function AdminPanel() {
   const [users, setUsers] = useState([]);

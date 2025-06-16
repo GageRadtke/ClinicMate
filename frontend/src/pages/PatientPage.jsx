@@ -1,6 +1,6 @@
 // PatientPage.jsx
 import React, { useEffect, useState } from "react";
-import apiClient from "../services/api";
+import apiClient from "../services/api.jsx"; // Corrected: Explicitly import from .jsx
 import AppointmentForm from "../components/AppointmentForm";
 import PrescriptionList from "../components/PrescriptionList";
 import MessageInbox from "../components/MessageInbox";
