@@ -8,6 +8,8 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard"; // This is the Patient Dashboard
 import HomePage from "./pages/HomePage";
 import SecureMessageForm from "./components/SecureMessageForm";
+=======
+import ContactPage from "./pages/ContactPage"; // ✅ New import
 
 const App = () => {
   return (
@@ -16,6 +18,7 @@ const App = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6">
           <Routes>
+
             {/* Public Pages */}
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
@@ -25,8 +28,10 @@ const App = () => {
             <Route path="/patient" element={<Dashboard />} />
             <Route path="/doctor" element={<DoctorPage />} />
             <Route path="/admin" element={<AdminPanel />} />
+               <Route path="/contact" element={<ContactPage />} /> {/* ✅ NEW ROUTE */}
 
             {/* Fallback for unknown routes */}
+
             <Route path="*" element={<div>Page Not Found</div>} />
           </Routes>
         </main>
