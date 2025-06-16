@@ -1,8 +1,9 @@
 // DoctorPage.jsx
-import React, { useEffect, useState } from "react"; // Added missing imports
-import apiClient from "../services/api"; // Added missing import for apiClient
-import SecureMessageForm from "../components/SecureMessageForm"; // Assuming this component exists
-import NotificationPopup from "../components/NotificationPopup"; // Assuming this component exists
+import React, { useEffect, useState } from "react";
+import apiClient from "../services/api"; // This import needs to be updated to .jsx or checked if it's implicitly resolved
+import SecureMessageForm from "../components/SecureMessageForm";
+import NotificationPopup from "../components/NotificationPopup";
+import Dashboard from "../components/Dashboard"; // Dashboard is a component now
 
 /**
  * DoctorPage Component: Displays the doctor's dashboard with appointments, messaging, and notifications.
@@ -50,7 +51,7 @@ export default function DoctorPage() {
       id: "appt-doc-456",
       patientName: "Robert Davis",
       time: "10:00 AM",
-      date: "June 12, 2025", // Changed date to be more realistic for a "next" appointment
+      date: "June 12, 2025",
       type: "Consultation",
     };
     setNextAppointment(mockNextAppointment);
@@ -85,8 +86,6 @@ export default function DoctorPage() {
 
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg max-w-4xl mx-auto my-8 relative">
-      {" "}
-      {/* Added relative for notification positioning */}
       <h1 className="text-3xl font-bold mb-6 text-blue-700">
         Doctor Dashboard
       </h1>
@@ -145,13 +144,19 @@ export default function DoctorPage() {
           />
         </>
       )}
-      {/* Doctor-specific notification popup */}
       {showNotification && nextAppointment && (
         <NotificationPopup
           appointment={nextAppointment}
           onAcknowledge={handleAcknowledge}
         />
       )}
+      {/* Dashboard component is now rendered directly within DoctorPage */}
+      <div className="mt-8">
+        <h2 className="text-2xl font-semibold mb-3 text-blue-600">
+          Patient Records & Notes
+        </h2>
+        <Dashboard />
+      </div>
     </div>
   );
 }

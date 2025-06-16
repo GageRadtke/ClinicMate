@@ -1,7 +1,7 @@
 // LoginPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/authService";
+import { login } from "../services/authService"; // This import needs to be updated to .jsx or checked if it's implicitly resolved
 import { useAuth } from "../context/AuthContext";
 
 export default function LoginPage() {

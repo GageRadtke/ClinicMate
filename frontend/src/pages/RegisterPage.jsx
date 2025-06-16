@@ -1,64 +1,63 @@
+// RegisterPage.jsx
 import React, { useState } from "react";
-import apiClient from "../services/api"; // Assuming apiClient handles your base URL
-import { useNavigate } from "react-router-dom"; // For redirection after successful registration
+import { useNavigate } from "react-router-dom";
+import { register as authRegister } from "../services/authService"; // This import needs to be updated to .jsx or checked if it's implicitly resolved
 
 const RegisterPage = () => {
-  // State variables for form inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState(""); // For success or error messages
-  const [error, setError] = useState(""); // For specific error messages
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const navigate = useNavigate(); // Hook for programmatic navigation
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior (page reload)
-    setMessage(""); // Clear previous messages
-    setError(""); // Clear previous errors
+    e.preventDefault();
+    setMessage("");
+    setError("");
+    setIsLoading(true);
 
-    // Basic client-side validation
     if (password !== confirmPassword) {
       setError("Passwords do not match.");
+      setIsLoading(false);
       return;
     }
     if (password.length < 12) {
       setError("Password must be at least 12 characters long.");
+      setIsLoading(false);
       return;
     }
 
     try {
-      // Make a POST request to your backend's registration endpoint
-      // Ensure your backend has a route like /api/auth/register or similar
-      const response = await apiClient.post("/auth/register", {
-        // Adjust endpoint as per your backend
-        email,
-        password,
-      });
-
-      // Handle successful registration
+      const response = await authRegister({ email, password });
       if (response.data && response.data.token) {
-        // If your backend returns a token upon registration, save it
         localStorage.setItem("token", response.data.token);
         setMessage("Registration successful! Redirecting to dashboard...");
-        // Optionally, save user info if returned
-        // localStorage.setItem('userInfo', JSON.stringify(response.data.user));
-
-        // Redirect to a dashboard or login page after a short delay
         setTimeout(() => {
-          navigate("/patient"); // Or wherever your user dashboard is
+          navigate("/patient");
         }, 1500);
+      } else if (response.data && response.data.message) {
+        setMessage(response.data.message + " Please proceed to login.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 2500);
       } else {
         setMessage("Registration successful, but no token received.");
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
       }
     } catch (err) {
-      // Handle errors from the backend (e.g., duplicate email, server error)
       console.error("Registration error:", err);
       if (err.response && err.response.data && err.response.data.message) {
-        setError(err.response.data.message); // Display error message from backend
+        setError(err.response.data.message);
       } else {
-        setError("Registration failed. Please try again."); // Generic error
+        setError("Registration failed. Please try again.");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -130,8 +129,9 @@ const RegisterPage = () => {
           <button
             type="submit"
             className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+            disabled={isLoading}
           >
-            Register
+            {isLoading ? "Registering..." : "Register"}
           </button>
         </form>
         <p className="mt-6 text-center text-sm text-gray-600">
