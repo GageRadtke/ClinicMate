@@ -8,11 +8,8 @@ import AdminPanel from "./pages/AdminPanel";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import SecureMessageForm from "./components/SecureMessageForm";
-<<<<<<< HEAD
 import ContactPage from "./pages/ContactPage"; // Corrected: This should be .jsx if renamed
-=======
-import ContactPage from "./pages/ContactPage"; // Assuming ContactPage.jsx now exists
->>>>>>> bd67491df3e7b4e14a93e91ce32f87801e43da84
+
 import RegisterPage from "./pages/RegisterPage";
 
 const App = () => {

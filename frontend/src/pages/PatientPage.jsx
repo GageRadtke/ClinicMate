@@ -1,10 +1,6 @@
 // PatientPage.jsx
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
 import apiClient from "../services/api.jsx"; // Corrected: Explicitly import from .jsx
-=======
-import apiClient from "../services/api"; // This import needs to be updated to .jsx or checked if it's implicitly resolved
->>>>>>> bd67491df3e7b4e14a93e91ce32f87801e43da84
 import AppointmentForm from "../components/AppointmentForm";
 import PrescriptionList from "../components/PrescriptionList";
 import MessageInbox from "../components/MessageInbox";

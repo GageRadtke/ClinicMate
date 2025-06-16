@@ -1,16 +1,9 @@
 // DoctorPage.jsx
 import React, { useEffect, useState } from "react";
-<<<<<<< HEAD
 import apiClient from "../services/api.jsx"; // Corrected: Explicitly import from .jsx
 import SecureMessageForm from "../components/SecureMessageForm";
 import NotificationPopup from "../components/NotificationPopup";
 import Dashboard from "../components/Dashboard";
-=======
-import apiClient from "../services/api"; // This import needs to be updated to .jsx or checked if it's implicitly resolved
-import SecureMessageForm from "../components/SecureMessageForm";
-import NotificationPopup from "../components/NotificationPopup";
-import Dashboard from "../components/Dashboard"; // Dashboard is a component now
->>>>>>> bd67491df3e7b4e14a93e91ce32f87801e43da84
 
 /**
  * DoctorPage Component: Displays the doctor's dashboard with appointments, messaging, and notifications.
@@ -157,10 +150,6 @@ export default function DoctorPage() {
           onAcknowledge={handleAcknowledge}
         />
       )}
-<<<<<<< HEAD
-=======
-      {/* Dashboard component is now rendered directly within DoctorPage */}
->>>>>>> bd67491df3e7b4e14a93e91ce32f87801e43da84
       <div className="mt-8">
         <h2 className="text-2xl font-semibold mb-3 text-blue-600">
           Patient Records & Notes
