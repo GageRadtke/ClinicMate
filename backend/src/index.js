@@ -35,7 +35,6 @@ app.use(
 );
 
 // 4. JSON body parsing (fixed)
-app.use(cors());
 app.use(express.json());
 
 // Routes
