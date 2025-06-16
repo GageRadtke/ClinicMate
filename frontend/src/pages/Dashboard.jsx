@@ -1,3 +1,4 @@
+// Dashboard.jsx
 import React, { useState } from "react";
 import RecordViewer from "../components/RecordViewer";
 import NotesSection from "../components/NotesSection";

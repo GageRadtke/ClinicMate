@@ -1,3 +1,4 @@
+// WelcomeSection.jsx
 import React from "react";
 
 function WelcomeSection() {

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -18,7 +17,7 @@ function NavBar() {
           </Link>
         </li>
         <li>
-          <Link to="/contact" className="hover:text-gray-300">
+          <Link to="/SecureMessageForm" className="hover:text-gray-300">
             Contact Medical Team
           </Link>
         </li>
@@ -63,7 +62,6 @@ function NavBar() {
             >
               Login
             </Link>
-
           </li>
         )}
       </ul>
@@ -71,4 +69,3 @@ function NavBar() {
   );
 }
 export default NavBar;
-

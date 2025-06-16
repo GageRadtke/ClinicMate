@@ -1,3 +1,4 @@
+// AdminPanel.jsx
 import React, { useEffect, useState } from "react";
 import apiClient from "../services/api";
 
@@ -31,4 +32,4 @@ export default function AdminPanel() {
     </div>
   );
 }
-//Note: For AdminPanel, you’d need a corresponding backend route (/api/auth/users) that returns all users; implement as needed.
+//Note: For AdminPanel, you’d need a corresponding backend route (/api/auth/users)
