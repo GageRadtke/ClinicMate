@@ -17,7 +17,7 @@ function NavBar() {
           </Link>
         </li>
         <li>
-          <Link to="/SecureMessageForm" className="hover:text-gray-300">
+          <Link to="/contact" className="hover:text-gray-300">
             Contact Medical Team
           </Link>
         </li>
@@ -55,14 +55,23 @@ function NavBar() {
             </li>
           </>
         ) : (
-          <li>
+          (<li>
             <Link
               to="/login"
               className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
             >
               Login
             </Link>
-          </li>
+          </li>)(
+            <li>
+              <Link
+                to="/Register"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded"
+              >
+                Register New User
+              </Link>
+            </li>
+          )
         )}
       </ul>
     </nav>
