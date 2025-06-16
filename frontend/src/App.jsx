@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar";
 import WelcomeSection from "./components/WelcomeSection";
 import AdminPanel from "./pages/AdminPanel";
 import LoginPage from "./pages/LoginPage";
+import ContactPage from "./pages/ContactPage"; // ✅ New import
 
 // Layout for pages with footer
 const LayoutWithFooter = () => (
@@ -47,16 +48,17 @@ function App() {
       <div className="flex-1 flex flex-col overflow-hidden">
         <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200 p-6">
           <Routes>
-            {/* Public Pages with Footer */}
+            {/* Public Page with Footer */}
             <Route element={<LayoutWithFooter />}>
               <Route path="/" element={<WelcomeSection />} />
             </Route>
 
-            {/* Functional Routes without footer */}
+            {/* Functional Pages */}
             <Route path="/patient" element={<Dashboard />} />
             <Route path="/doctor" element={<DoctorPage />} />
             <Route path="/admin" element={<AdminPanel />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/contact" element={<ContactPage />} /> {/* ✅ NEW ROUTE */}
             <Route path="*" element={<div>Page Not Found</div>} />
           </Routes>
         </main>
@@ -69,7 +71,6 @@ function App() {
         />
       )}
     </div>
-
   );
 }
 
