@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import RecordViewer from "../components/RecordViewer";
 import NotesSection from "../components/NotesSection";
 import ScheduleManager from "../components/ScheduleManager";
+import PrescriptionList from "../components/PrescriptionList";
 
 function Dashboard() {
   const [selectedPatientId, setSelectedPatientId] = useState(null);
@@ -57,6 +58,9 @@ function Dashboard() {
 
       <div className="col-span-full">
         <ScheduleManager />
+      </div>
+      <div className="col-span-full">
+        <PrescriptionList />
       </div>
     </div>
   );
